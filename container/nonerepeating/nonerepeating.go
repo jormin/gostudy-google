@@ -15,9 +15,9 @@ func lengthOfNoneRepeatingSubStr(s string) int {
 		}
 		lastOccurred[ch] = i
 	}
-	for k, v := range lastOccurred {
-		fmt.Printf("%s:%d\n", string(k), v)
-	}
+	//for k, v := range lastOccurred {
+	//	fmt.Printf("%s:%d\n", string(k), v)
+	//}
 	return maxLength
 }
 
