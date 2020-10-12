@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go-study/tree"
+	"github.com/jormin/go-study/tree"
 )
 
 func main() {

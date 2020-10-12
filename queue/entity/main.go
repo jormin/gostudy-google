@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go-study/queue"
+	"github.com/jormin/go-study/queue"
 )
 
 func main() {

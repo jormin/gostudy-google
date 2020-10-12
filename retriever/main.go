@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"go-study/retriever/mock"
-	"go-study/retriever/real"
+	"github.com/jormin/go-study/retriever/mock"
+	"github.com/jormin/go-study/retriever/real"
 	"time"
 )
 

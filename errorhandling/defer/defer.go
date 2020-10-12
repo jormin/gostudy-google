@@ -3,7 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"go-study/functional/fib"
+	"github.com/jormin/go-study/functional/fib"
 	"os"
 )
 

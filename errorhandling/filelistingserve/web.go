@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"go-study/errorhandling/filelistingserve/filelisting"
-	"go-study/modules/log"
+	"github.com/jormin/go-study/errorhandling/filelistingserve/filelisting"
+	"github.com/jormin/go-study/modules/log"
 	"net/http"
 	_ "net/http/pprof"
 	"os"
