@@ -5,6 +5,7 @@ import (
 	"go-study/errorhandling/filelistingserve/filelisting"
 	"go-study/modules/log"
 	"net/http"
+	_ "net/http/pprof"
 	"os"
 )
 
