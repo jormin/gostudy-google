@@ -42,19 +42,28 @@ func main() {
 	//pRoot2 = &root
 	//pRoot2.setValue(200)
 
-	fmt.Println("Traverse")
-	root.Traverse()
-	fmt.Println()
-	nodeCount := 0
-	root.TraverseFunc(func(node *tree.Node) {
-		nodeCount ++
-	})
-	fmt.Println(nodeCount)
+	//fmt.Println("Traverse")
+	//root.Traverse()
+	//fmt.Println()
+	//nodeCount := 0
+	//root.TraverseFunc(func(node *tree.Node) {
+	//	nodeCount ++
+	//})
+	//fmt.Println(nodeCount)
+	//
+	//myNode := tree.MyNode{
+	//	Node: &root,
+	//}
+	//myNode.Traverse()
+	//fmt.Println()
 
-	myNode := tree.MyNode{
-		Node: &root,
+	c := root.TraverseWithChannel()
+	maxNode := 0
+	for node := range c {
+		if node.Value > maxNode {
+			maxNode = node.Value
+		}
 	}
-	myNode.Traverse()
-	fmt.Println()
+	fmt.Println("Max node value", maxNode)
 
 }
