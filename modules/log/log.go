@@ -50,7 +50,7 @@ const (
 )
 
 func Print(level int, format string, args ...interface{}) {
-	if !Verbose && level < WARNING {
+	if !Verbose && level < DEBUG {
 		return
 	}
 
