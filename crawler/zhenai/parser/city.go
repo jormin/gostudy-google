@@ -19,10 +19,10 @@ func ParseUserList(contents string) engine.ParseResult {
 	dd.Each(func(i int, s *goquery.Selection) {
 		url, _ := s.Find("a").Attr("href")
 		nickname := s.Find(".content").Find("th").First().Text()
-		result.Requests = append(result.Requests, engine.Request{
-			Url:       url,
-			ParseFunc: engine.NilParser,
-		})
+		//result.Requests = append(result.Requests, engine.Request{
+		//	Url:       url,
+		//	ParseFunc: ParseProfile,
+		//})
 		result.Items = append(result.Items, engine.Item{
 			Tag:  "user",
 			Name: nickname,
