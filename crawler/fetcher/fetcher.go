@@ -7,8 +7,6 @@ import (
 	"golang.org/x/net/html/charset"
 	"golang.org/x/text/encoding"
 	"golang.org/x/text/encoding/unicode"
-	"golang.org/x/text/transform"
-	"io"
 	"io/ioutil"
 	"net/http"
 )
@@ -23,12 +21,14 @@ func Fetch(url string) ([]byte, error) {
 		return nil, fmt.Errorf("wrong status code: %d", resp.StatusCode)
 	}
 	// 如果是GBK编码则需要转换
-	utf8Reader := transform.NewReader(resp.Body, determineEncoding(resp.Body).NewDecoder())
-	return ioutil.ReadAll(utf8Reader)
+	//bufioReader := bufio.NewReader(resp.Body)
+	//e := determineEncoding(bufioReader)
+	//utf8Reader := transform.NewReader(resp.Body, e.NewDecoder())
+	return ioutil.ReadAll(resp.Body)
 }
 
-func determineEncoding(r io.Reader) encoding.Encoding {
-	b, err := bufio.NewReader(r).Peek(1024)
+func determineEncoding(r *bufio.Reader) encoding.Encoding {
+	b, err := r.Peek(1024)
 	if err != nil {
 		log.Error("Fetch error: %v", err)
 		return unicode.UTF8
