@@ -24,7 +24,11 @@ func ParseCityList(contents string) engine.ParseResult {
 					Url:       url,
 					ParseFunc: ParseUserList,
 				})
-				result.Items = append(result.Items, a.Text())
+				result.Items = append(result.Items, engine.Item{
+					Tag:  "city",
+					Name: a.Text(),
+					URL:  url,
+				})
 			})
 		})
 	})

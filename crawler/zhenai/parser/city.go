@@ -21,9 +21,13 @@ func ParseUserList(contents string) engine.ParseResult {
 		nickname := s.Find(".content").Find("th").First().Text()
 		result.Requests = append(result.Requests, engine.Request{
 			Url:       url,
-			ParseFunc: ParseProfile,
+			ParseFunc: engine.NilParser,
 		})
-		result.Items = append(result.Items, nickname)
+		result.Items = append(result.Items, engine.Item{
+			Tag:  "user",
+			Name: nickname,
+			URL:  url,
+		})
 	})
 	return result
 }

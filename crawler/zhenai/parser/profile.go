@@ -55,7 +55,11 @@ func ParseProfile(contents string) (result engine.ParseResult) {
 	// 择偶条件
 	ParseTag(dom, "gray-btns", &profile.Condition)
 	log.Info("%+v", profile)
-	result.Items = append(result.Items, profile.BasicInfo)
+	result.Items = append(result.Items, engine.Item{
+		Tag:  "profile",
+		Name: profile.BasicInfo.Nickname,
+		Data: profile.BasicInfo,
+	})
 	return result
 }
 

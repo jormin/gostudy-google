@@ -30,7 +30,7 @@ func TestParseCityList(t *testing.T) {
 		t.Errorf("Result should have %d items; but had %d", resutSize, len(parseResult.Items))
 	}
 	for i, city := range expectCitys {
-		if parseResult.Items[i] != city {
+		if parseResult.Items[i].Name != city {
 			t.Errorf("expected city #%d: %s; but was %s", i, city, parseResult.Items[i])
 		}
 	}

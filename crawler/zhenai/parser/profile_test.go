@@ -12,7 +12,7 @@ func TestParseProfile(t *testing.T) {
 		panic(err)
 	}
 	result := ParseProfile(string(b))
-	basicInfo := result.Items[0].(model.BasicInfo)
+	basicInfo := result.Items[0].Data.(model.BasicInfo)
 	expectID := 1865081142
 	expectNickname := "念初"
 	if expectID != basicInfo.ID {
