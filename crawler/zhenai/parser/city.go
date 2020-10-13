@@ -29,5 +29,20 @@ func ParseUserList(contents string) engine.ParseResult {
 			URL:  url,
 		})
 	})
+
+	dom.Find(".list-item").Each(func(i int, s *goquery.Selection) {
+		s.Find("a").Each(func(i int, sub *goquery.Selection) {
+			url, _ := sub.Attr("href")
+			result.Requests = append(result.Requests, engine.Request{
+				Url:       url,
+				ParseFunc: ParseUserList,
+			})
+			result.Items = append(result.Items, engine.Item{
+				Tag:  "Column",
+				Name: sub.Text(),
+				URL:  url,
+			})
+		})
+	})
 	return result
 }
