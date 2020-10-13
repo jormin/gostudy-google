@@ -11,10 +11,6 @@ func (s *QueuedScheduler) Submit(r engine.Request) {
 	s.requestCh <- r
 }
 
-func (s *QueuedScheduler) ConfigureMasterWorlerChan(r chan engine.Request) {
-	panic("implement me")
-}
-
 func (s *QueuedScheduler) WorkerReady(ch chan engine.Request) {
 	s.workerCh <- ch
 }
@@ -45,4 +41,8 @@ func (s *QueuedScheduler) Run() {
 			}
 		}
 	}()
+}
+
+func (s *QueuedScheduler) WorkerChan() chan engine.Request {
+	return make(chan engine.Request)
 }
