@@ -10,7 +10,7 @@ func TestParseCityList(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	parseResult := ParseCityList(b)
+	parseResult := ParseCityList(string(b))
 	const resutSize = 470
 	expectUrls := []string{
 		"http://www.zhenai.com/zhenghun/aba", "http://www.zhenai.com/zhenghun/akesu", "http://www.zhenai.com/zhenghun/alashanmeng",

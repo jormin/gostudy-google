@@ -1,22 +1,32 @@
 package parser
 
 import (
+	"github.com/PuerkitoBio/goquery"
 	"github.com/jormin/go-study/crawler/engine"
-	"regexp"
+	"github.com/jormin/go-study/modules/log"
+	"strings"
 )
 
-const cityListRe = `<a href="(http://www.zhenai.com/zhenghun/[a-zA-Z0-9]+)"[^>]*>([^<]+)</a>`
-
-func ParseCityList(contents []byte) engine.ParseResult {
-	re := regexp.MustCompile(cityListRe)
-	match := re.FindAllSubmatch(contents, -1)
+// 解析城市列表
+func ParseCityList(contents string) engine.ParseResult {
 	result := engine.ParseResult{}
-	for _, m := range match {
-		result.Items = append(result.Items, string(m[2]))
-		result.Requests = append(result.Requests, engine.Request{
-			Url:       string(m[1]),
-			ParseFunc: engine.NilParser,
-		})
+	dom, err := goquery.NewDocumentFromReader(strings.NewReader(contents))
+	if err != nil {
+		log.Error("Parse city list error: %v", err)
+		return result
 	}
+	dd := dom.Find(".city-list").Find("dd")
+	dd.Each(func(i int, s *goquery.Selection) {
+		s.Each(func(i int, sub *goquery.Selection) {
+			sub.Find("a").Each(func(i int, a *goquery.Selection) {
+				url, _ := a.Attr("href")
+				result.Requests = append(result.Requests, engine.Request{
+					Url:       url,
+					ParseFunc: ParseUserList,
+				})
+				result.Items = append(result.Items, a.Text())
+			})
+		})
+	})
 	return result
 }

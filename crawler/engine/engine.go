@@ -17,10 +17,10 @@ func Run(seeds ...Request) {
 			log.Error("Fetcher: error fetching url %s: %v", r.Url, err)
 			continue
 		}
-		parseResult := r.ParseFunc(b)
+		parseResult := r.ParseFunc(string(b))
 		requests = append(requests, parseResult.Requests...)
-		for _, item := range parseResult.Items {
-			log.Info("Got item %s", item)
-		}
+		//for _, item := range parseResult.Items {
+		//	log.Info("Got item %s", item)
+		//}
 	}
 }

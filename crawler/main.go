@@ -6,9 +6,20 @@ import (
 )
 
 func main() {
+	//engine.Run(engine.Request{
+	//	Url:       "https://www.zhenai.com/zhenghun",
+	//	ParseFunc: parser.ParseCityList,
+	//})
+
 	engine.Run(engine.Request{
-		Url: "https://www.zhenai.com/zhenghun",
-		ParseFunc: parser.ParseCityList,
+		Url:       "https://album.zhenai.com/u/1079404336",
+		ParseFunc: parser.ParseProfile,
 	})
+
+	//b, err := ioutil.ReadFile("zhenai/parser/profile.html")
+	//if err != nil {
+	//	panic(err)
+	//}
+	//parser.ParseProfile(string(b))
 
 }
