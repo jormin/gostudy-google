@@ -1,10 +1,12 @@
 package persist
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/jormin/go-study/crawler/engine"
 	"github.com/jormin/go-study/modules/log"
+	"github.com/olivere/elastic/v7"
 	"os"
 )
 
@@ -32,4 +34,19 @@ func ItemSaver() chan engine.Item {
 		}
 	}()
 	return out
+}
+
+func save(item engine.Item) (id string, err error) {
+	client, err := elastic.NewClient(elastic.SetSniff(false))
+	if err != nil {
+		log.Error("Connect elasticsearch error: %v", err)
+		return id, err
+	}
+	b, _ := json.Marshal(item)
+	resp, err := client.Index().Index("dating_profile").BodyString(string(b)).Do(context.Background())
+	if err != nil {
+		log.Error("Index item error: %v", err)
+		return id, err
+	}
+	return resp.Id, nil
 }

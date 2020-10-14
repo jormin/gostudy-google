@@ -4,6 +4,7 @@ go 1.15
 
 require (
 	github.com/PuerkitoBio/goquery v1.6.0
+	github.com/olivere/elastic/v7 v7.0.20
 	golang.org/x/net v0.0.0-20201010224723-4f7140c49acb
 	golang.org/x/text v0.3.3
 	golang.org/x/tools v0.0.0-20201011145850-ed2f50202694
