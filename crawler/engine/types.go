@@ -20,7 +20,7 @@ type Item struct {
 }
 
 func (i Item) String() string {
-	return fmt.Sprintf("[TAG] %s [NAME] %s [URL] %s [DATA] %v", i.Tag, i.Name, i.URL, i.Data)
+	return fmt.Sprintf("[TAG] %s [NAME] %s [URL] %s [DATA] %+v", i.Tag, i.Name, i.URL, i.Data)
 }
 
 func NilParser(contents string) ParseResult {
