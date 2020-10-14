@@ -1,6 +1,9 @@
 package helper
 
-import "strings"
+import (
+	"github.com/jormin/go-study/modules/log"
+	"strings"
+)
 
 func InArray(need interface{}, arr []interface{}) bool {
 	for _, item := range arr {
@@ -18,4 +21,8 @@ func StringMultiIndex(need string, arr []string) bool {
 		}
 	}
 	return false
+}
+
+func LogError(prefix string, err error) {
+	log.Error("%s: %v", prefix, err)
 }

@@ -20,15 +20,10 @@ func Parse(r Request) (ParseResult, error) {
 	return r.ParseFunc(string(b)), nil
 }
 
-func Save(item Item) (id string, err error) {
-	client, err := elastic.NewClient(elastic.SetSniff(false))
-	if err != nil {
-		log.Error("Connect elasticsearch error: %v", err)
-		return id, err
-	}
+func Save(client *elastic.Client, index string, item Item) (id string, err error) {
 	profile := item.Data.(model.SimpleProfile)
 	b, _ := json.Marshal(item)
-	resp, err := client.Index().Index("profile").Id(strconv.Itoa(profile.ID)).BodyString(string(b)).Do(context.Background())
+	resp, err := client.Index().Index(index).Id(strconv.Itoa(profile.ID)).BodyString(string(b)).Do(context.Background())
 	if err != nil {
 		log.Error("Index item error: %v", err)
 		return id, err
