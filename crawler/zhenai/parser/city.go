@@ -5,6 +5,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/jormin/go-study/crawler/engine"
 	"github.com/jormin/go-study/crawler/model"
+	"github.com/jormin/go-study/crawler_distribute/config"
 	"github.com/jormin/go-study/modules/log"
 	"strconv"
 	"strings"
@@ -77,7 +78,7 @@ func ParseUserList(contents string) engine.ParseResult {
 				url, _ := sub.Attr("href")
 				result.Requests = append(result.Requests, engine.Request{
 					Url:    url,
-					Parser: engine.NewFuncParser(ParseUserList, "ParseUserList"),
+					Parser: engine.NewFuncParser(ParseUserList, config.ParseUserList),
 				})
 				result.Items = append(result.Items, engine.Item{
 					Tag:  "column",

@@ -5,6 +5,7 @@ import (
 	"github.com/jormin/go-study/crawler/persist"
 	"github.com/jormin/go-study/crawler/scheduler"
 	"github.com/jormin/go-study/crawler/zhenai/parser"
+	"github.com/jormin/go-study/crawler_distribute/config"
 )
 
 func main() {
@@ -23,7 +24,7 @@ func main() {
 	}
 	concurrentEngine.Run(engine.Request{
 		Url:    "https://www.zhenai.com/zhenghun",
-		Parser: engine.NewFuncParser(parser.ParseCityList, "ParseCityList"),
+		Parser: engine.NewFuncParser(parser.ParseCityList, config.ParseCityList),
 	})
 
 	//engine.Run(engine.Request{
