@@ -3,6 +3,7 @@ package persist
 import (
 	"context"
 	"encoding/json"
+	"github.com/jormin/go-study/crawler/engine"
 	"github.com/jormin/go-study/crawler/zhenai/parser"
 	"github.com/jormin/go-study/modules/log"
 	"github.com/olivere/elastic/v7"
@@ -15,7 +16,7 @@ func TestSave(t *testing.T) {
 	result := parser.ParseUserList(string(b))
 	for _, item := range result.Items {
 		log.Info("%v", item)
-		id, err := save(item)
+		id, err := engine.Save(item)
 		if err != nil {
 			t.Errorf("Save error: %v", err)
 			return
@@ -31,7 +32,7 @@ func TestSave(t *testing.T) {
 			t.Errorf("Index document error: %v", err)
 		}
 		actual, _ := resp.Source.MarshalJSON()
-		expect, _ := json.Marshal(item.Data)
+		expect, _ := json.Marshal(item)
 		if string(actual) != string(expect) {
 			t.Errorf("got %v; expected %v", actual, item)
 		}

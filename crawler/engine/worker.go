@@ -27,7 +27,7 @@ func Save(item Item) (id string, err error) {
 		return id, err
 	}
 	profile := item.Data.(model.SimpleProfile)
-	b, _ := json.Marshal(profile)
+	b, _ := json.Marshal(item)
 	resp, err := client.Index().Index("profile").Id(strconv.Itoa(profile.ID)).BodyString(string(b)).Do(context.Background())
 	if err != nil {
 		log.Error("Index item error: %v", err)
