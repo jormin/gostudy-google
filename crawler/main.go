@@ -16,8 +16,10 @@ func main() {
 
 	concurrentEngine := engine.ConcurrentEngine{
 		Scheduler:   &scheduler.QueuedScheduler{},
+		Saver:       &persist.SimpleSaver{},
 		WorkerCount: 100,
-		ItemCh:      persist.ItemSaver(),
+		Urls:        make(map[string]interface{}),
+		Users:       make(map[int]interface{}),
 	}
 	concurrentEngine.Run(engine.Request{
 		Url:       "https://www.zhenai.com/zhenghun",

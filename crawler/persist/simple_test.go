@@ -26,12 +26,12 @@ func TestSave(t *testing.T) {
 		if err != nil {
 			t.Errorf("Connect elasticsearch error: %v", err)
 		}
-		resp, err := client.Get().Index("dating_profile").Id(id).Do(context.Background())
+		resp, err := client.Get().Index("profile").Id(id).Do(context.Background())
 		if err != nil {
 			t.Errorf("Index document error: %v", err)
 		}
 		actual, _ := resp.Source.MarshalJSON()
-		expect, _ := json.Marshal(item)
+		expect, _ := json.Marshal(item.Data)
 		if string(actual) != string(expect) {
 			t.Errorf("got %v; expected %v", actual, item)
 		}

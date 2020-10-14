@@ -22,11 +22,13 @@ func ParseUserList(contents string) engine.ParseResult {
 	dd.Each(func(i int, s *goquery.Selection) {
 		url, _ := s.Find("a").Attr("href")
 		nickname := s.Find(".content").Find("th").First().Text()
-		profile := model.NewProfile()
+		profile := model.SimpleProfile{}
 		urlArr := strings.Split(url, "/")
 		id, _ := strconv.Atoi(urlArr[len(urlArr)-1])
-		profile.BasicInfo.ID = id
-		profile.BasicInfo.Nickname = nickname
+		profile.ID = id
+		profile.Nickname = nickname
+		avatar, _ := s.Find(".photo").Find("img").Attr("src")
+		profile.Avatar = avatar
 		tds := s.Find(".content").Find("td")
 		tds.Each(func(i int, sub *goquery.Selection) {
 			label := sub.Find("span").Text()
@@ -34,25 +36,25 @@ func ParseUserList(contents string) engine.ParseResult {
 			switch label {
 			case "性别：":
 				if val == "女士" {
-					profile.NormalInfo.Gender = 1
+					profile.Gender = 1
 				} else {
-					profile.NormalInfo.Gender = 0
+					profile.Gender = 0
 				}
 			case "居住地：":
-				profile.BasicInfo.City = val
+				profile.City = val
 			case "年龄：":
-				profile.NormalInfo.Age = val
+				profile.Age = val
 			case "学   历：":
-				profile.NormalInfo.Education = val
+				profile.Education = val
 			case "婚况：":
-				profile.NormalInfo.Marital = val
+				profile.Marital = val
 			case "身   高：":
-				profile.NormalInfo.Height = fmt.Sprintf("%scm", val)
+				profile.Height = fmt.Sprintf("%scm", val)
 			case "月   薪：":
-				profile.NormalInfo.Salary = val
+				profile.Salary = val
 			}
 		})
-		profile.BasicInfo.Description = s.Find(".introduce").Text()
+		profile.Description = s.Find(".introduce").Text()
 		//result.Requests = append(result.Requests, engine.Request{
 		//	Url:       url,
 		//	ParseFunc: ParseProfile,
