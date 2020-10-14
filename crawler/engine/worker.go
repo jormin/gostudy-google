@@ -17,7 +17,7 @@ func Parse(r Request) (ParseResult, error) {
 		log.Error("Fetcher: error fetching url %s: %v", r.Url, err)
 		return ParseResult{}, err
 	}
-	return r.ParseFunc(string(b)), nil
+	return r.Parser.Parse(string(b)), nil
 }
 
 func Save(client *elastic.Client, index string, item Item) (id string, err error) {

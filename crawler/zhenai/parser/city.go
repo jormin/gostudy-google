@@ -76,8 +76,8 @@ func ParseUserList(contents string) engine.ParseResult {
 			s.Find("a").Each(func(i int, sub *goquery.Selection) {
 				url, _ := sub.Attr("href")
 				result.Requests = append(result.Requests, engine.Request{
-					Url:       url,
-					ParseFunc: ParseUserList,
+					Url:    url,
+					Parser: engine.NewFuncParser(ParseUserList, "ParseUserList"),
 				})
 				result.Items = append(result.Items, engine.Item{
 					Tag:  "column",

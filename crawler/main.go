@@ -22,8 +22,8 @@ func main() {
 		Users:       make(map[int]interface{}),
 	}
 	concurrentEngine.Run(engine.Request{
-		Url:       "https://www.zhenai.com/zhenghun",
-		ParseFunc: parser.ParseCityList,
+		Url:    "https://www.zhenai.com/zhenghun",
+		Parser: engine.NewFuncParser(parser.ParseCityList, "ParseCityList"),
 	})
 
 	//engine.Run(engine.Request{

@@ -22,14 +22,14 @@ func ParseCityList(contents string) engine.ParseResult {
 			sub.Find("a").Each(func(i int, a *goquery.Selection) {
 				url, _ := a.Attr("href")
 				result.Requests = append(result.Requests, engine.Request{
-					Url:       url,
-					ParseFunc: ParseUserList,
+					Url:    url,
+					Parser: engine.NewFuncParser(ParseUserList, "ParseUserList"),
 				})
 				// 每个城市增加到10页
 				for i := 2; i <= 10; i++ {
 					result.Requests = append(result.Requests, engine.Request{
-						Url:       fmt.Sprintf("%s/%d", url, i),
-						ParseFunc: ParseUserList,
+						Url:    fmt.Sprintf("%s/%d", url, i),
+						Parser: engine.NewFuncParser(ParseUserList, "ParseUserList"),
 					})
 				}
 				result.Items = append(result.Items, engine.Item{
