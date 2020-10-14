@@ -2,6 +2,7 @@ package rpcsupport
 
 import (
 	"github.com/jormin/go-study/helper"
+	"github.com/jormin/go-study/modules/log"
 	"net"
 	"net/rpc"
 	"net/rpc/jsonrpc"
@@ -16,13 +17,20 @@ func ServerRpc(host string, server interface{}) error {
 	if err != nil {
 		return err
 	}
+	log.Info("Server rpc ready")
+	count := 0
 	for {
 		conn, err := listener.Accept()
 		if err != nil {
 			helper.LogError("accept error", err)
 			continue
 		}
-		go jsonrpc.ServeConn(conn)
+		count++
+		log.Info("got accept #%d", count)
+		go func() {
+			jsonrpc.ServeConn(conn)
+			log.Info("server accept #%d finish", count)
+		}()
 	}
 }
 

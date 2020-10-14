@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/jormin/go-study/crawler/zhenai/parser"
+	"github.com/jormin/go-study/crawler_distribute/config"
 	"github.com/jormin/go-study/crawler_distribute/rpcsupport"
 	"github.com/jormin/go-study/modules/log"
 	"io/ioutil"
@@ -11,7 +12,7 @@ import (
 )
 
 func TestRpcServer(t *testing.T) {
-	host := ":1234"
+	host := config.SaverHost
 	index := "test"
 	// start saver service
 	go func() {
@@ -34,7 +35,7 @@ func TestRpcServer(t *testing.T) {
 		log.Info("%+v", item)
 		log.Info("%+v", reflect.TypeOf(item.Data))
 		id := ""
-		err = client.Call("SaverService.Save", item, &id)
+		err = client.Call(config.SaverRpc, item, &id)
 		if err != nil {
 			t.Errorf("error: %v", err)
 		}

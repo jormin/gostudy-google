@@ -2,9 +2,6 @@ package engine
 
 import (
 	"github.com/jormin/go-study/crawler/model"
-	"github.com/jormin/go-study/helper"
-	"github.com/jormin/go-study/modules/log"
-	"github.com/olivere/elastic/v7"
 )
 
 type ConcurrentEngine struct {
@@ -34,16 +31,8 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 	e.Scheduler.Run()
 	e.Saver.Run()
 
-	elasticClient, err := elastic.NewClient(elastic.SetSniff(false))
-	if err != nil {
-		helper.LogError("Connect elasticsearch error", err)
-		panic(err)
-	}
-	index := "profile"
-
 	for i := 0; i < e.WorkerCount; i++ {
 		createWorker(e.Scheduler, out)
-		createSaveWorker(elasticClient, index, e.Saver)
 	}
 
 	for _, r := range seeds {
@@ -87,21 +76,6 @@ func createWorker(s Scheduler, out chan ParseResult, ) {
 				continue
 			}
 			out <- result
-		}
-	}()
-}
-
-func createSaveWorker(client *elastic.Client, index string, s Saver) {
-	go func() {
-		for {
-			in := s.WorkerChan()
-			s.WorkerReady(in)
-			item := <-in
-			id, err := Save(client, index, item)
-			if err != nil {
-				continue
-			}
-			log.Info("Save item %s", id)
 		}
 	}()
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/jormin/go-study/crawler_distribute/config"
 	"github.com/jormin/go-study/crawler_distribute/persist"
 	"github.com/jormin/go-study/crawler_distribute/rpcsupport"
 	"github.com/jormin/go-study/modules/log"
@@ -8,7 +9,7 @@ import (
 )
 
 func main() {
-	log.Fatal(ServerRpc(":1234", "profile").Error())
+	log.Fatal(ServerRpc(config.SaverHost, config.ElasticIndex).Error())
 }
 
 func ServerRpc(host string, index string) error {
