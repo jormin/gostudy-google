@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/jormin/go-study/crawler/engine"
+	"github.com/jormin/go-study/crawler/persist"
 	"github.com/jormin/go-study/crawler/scheduler"
 	"github.com/jormin/go-study/crawler/zhenai/parser"
 )
@@ -16,6 +17,7 @@ func main() {
 	concurrentEngine := engine.ConcurrentEngine{
 		Scheduler:   &scheduler.QueuedScheduler{},
 		WorkerCount: 100,
+		ItemCh:      persist.ItemSaver(),
 	}
 	concurrentEngine.Run(engine.Request{
 		Url:       "https://www.zhenai.com/zhenghun",
