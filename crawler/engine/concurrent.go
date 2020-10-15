@@ -1,12 +1,14 @@
 package engine
 
 import (
+	"encoding/json"
 	"github.com/jormin/go-study/crawler/model"
 )
 
 type ConcurrentEngine struct {
 	Scheduler   Scheduler
 	Saver       Saver
+	Processor   Processor
 	WorkerCount int
 	Urls        map[string]interface{}
 	Users       map[int]interface{}
@@ -26,13 +28,15 @@ type Saver interface {
 	WorkerReady(chan Item)
 }
 
+type Processor func(r Request) (ParseResult, error)
+
 func (e *ConcurrentEngine) Run(seeds ...Request) {
 	out := make(chan ParseResult)
 	e.Scheduler.Run()
 	e.Saver.Run()
 
 	for i := 0; i < e.WorkerCount; i++ {
-		createWorker(e.Scheduler, out)
+		e.CreateWorker(e.Scheduler, out)
 	}
 
 	for _, r := range seeds {
@@ -44,7 +48,10 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 		for _, item := range result.Items {
 			if item.Tag == "user" {
 				// unique user
-				profile := item.Data.(model.SimpleProfile)
+				b, _ := json.Marshal(item.Data)
+				var profile model.SimpleProfile
+				_ = json.Unmarshal(b, &profile)
+				item.Data = profile
 				if _, ok := e.Users[profile.ID]; ok {
 					continue
 				}
@@ -65,13 +72,13 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 
 }
 
-func createWorker(s Scheduler, out chan ParseResult, ) {
+func (e *ConcurrentEngine) CreateWorker(s Scheduler, out chan ParseResult) {
 	go func() {
 		for {
 			in := s.WorkerChan()
 			s.WorkerReady(in)
 			r := <-in
-			result, err := Parse(r)
+			result, err := e.Processor(r)
 			if err != nil {
 				continue
 			}

@@ -20,13 +20,14 @@ func Parse(r Request) (ParseResult, error) {
 	return r.Parser.Parse(string(b)), nil
 }
 
-func Save(client *elastic.Client, index string, item Item) (id string, err error) {
+func Save(client *elastic.Client, index string, item Item) (string, error) {
 	profile := item.Data.(model.SimpleProfile)
 	b, _ := json.Marshal(item)
 	resp, err := client.Index().Index(index).Id(strconv.Itoa(profile.ID)).BodyString(string(b)).Do(context.Background())
 	if err != nil {
 		log.Error("Index item error: %v", err)
-		return id, err
+		return "", err
 	}
+	log.Info("Saving item %s", resp.Id)
 	return resp.Id, nil
 }

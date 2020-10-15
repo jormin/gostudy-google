@@ -6,6 +6,7 @@ import (
 	"github.com/jormin/go-study/crawler/scheduler"
 	"github.com/jormin/go-study/crawler/zhenai/parser"
 	"github.com/jormin/go-study/crawler_distribute/config"
+	"github.com/jormin/go-study/crawler_distribute/worker/client"
 )
 
 func main() {
@@ -15,9 +16,14 @@ func main() {
 	//	ParseFunc: parser.ParseCityList,
 	//})
 
+	processor, err := client.NewClient(config.CrawlHost)
+	if err != nil {
+		panic(err)
+	}
 	concurrentEngine := engine.ConcurrentEngine{
 		Scheduler:   &scheduler.QueuedScheduler{},
 		Saver:       &persist.SimpleSaver{},
+		Processor:   processor,
 		WorkerCount: 100,
 		Urls:        make(map[string]interface{}),
 		Users:       make(map[int]interface{}),

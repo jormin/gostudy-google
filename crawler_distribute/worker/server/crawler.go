@@ -8,5 +8,5 @@ import (
 )
 
 func main() {
-	log.Fatal(rpcsupport.ServerRpc(config.CrawlHost, worker.CrawlService{}).Error())
+	log.Fatal(rpcsupport.ServerRpc(config.CrawlHost, &worker.CrawlService{}).Error())
 }
