@@ -17,7 +17,7 @@ func ServerRpc(host string, server interface{}) error {
 	if err != nil {
 		return err
 	}
-	log.Info("Server rpc ready")
+	log.Info("Server rpc ready on %s", host)
 	count := 0
 	for {
 		conn, err := listener.Accept()

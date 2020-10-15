@@ -88,5 +88,20 @@ func ParseUserList(contents string) engine.ParseResult {
 			})
 		})
 	})
+
+	// page
+	dom.Find(".paging-item--current").Siblings().Each(func(i int, s *goquery.Selection) {
+		a := s.Find("a")
+		url, _ := a.Attr("href")
+		result.Requests = append(result.Requests, engine.Request{
+			Url:    url,
+			Parser: engine.NewFuncParser(ParseUserList, config.ParseUserList),
+		})
+		result.Items = append(result.Items, engine.Item{
+			Tag:  "column",
+			Name: fmt.Sprintf("page: %s", a.Text()),
+			URL:  url,
+		})
+	})
 	return result
 }

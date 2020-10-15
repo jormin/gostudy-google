@@ -1,7 +1,6 @@
 package parser
 
 import (
-	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/jormin/go-study/crawler/engine"
 	"github.com/jormin/go-study/crawler_distribute/config"
@@ -26,13 +25,6 @@ func ParseCityList(contents string) engine.ParseResult {
 					Url:    url,
 					Parser: engine.NewFuncParser(ParseUserList, config.ParseUserList),
 				})
-				// 每个城市增加到10页
-				for i := 2; i <= 10; i++ {
-					result.Requests = append(result.Requests, engine.Request{
-						Url:    fmt.Sprintf("%s/%d", url, i),
-						Parser: engine.NewFuncParser(ParseUserList, config.ParseUserList),
-					})
-				}
 				result.Items = append(result.Items, engine.Item{
 					Tag:  "city",
 					Name: a.Text(),
