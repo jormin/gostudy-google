@@ -18,12 +18,16 @@ func main() {
 		log.Error("must specify a port")
 		return
 	}
-	log.Info("%d", port)
+	log.Info("%d", *port)
 	log.Fatal(ServerRpc(fmt.Sprintf(":%d", *port), config.ElasticIndex).Error())
 }
 
 func ServerRpc(host string, index string) error {
-	client, err := elastic.NewClient(elastic.SetSniff(false))
+	client, err := elastic.NewClient(
+		elastic.SetURL("http://127.0.0.1:9200"),
+		elastic.SetBasicAuth("elastic", "changeme"),
+		elastic.SetSniff(false),
+		)
 	if err != nil {
 		return err
 	}
