@@ -53,7 +53,7 @@ func DeserializeParser(p SerializedParser) (engine.Parser, error) {
 	case config.ParseCityList:
 		return engine.NewFuncParser(parser.ParseCityList, config.ParseCityList), nil
 	case config.NilParser:
-		return engine.NikParser{}, nil
+		return engine.NilParser{}, nil
 	default:
 		return nil, errors.New("unkonow parser name")
 	}

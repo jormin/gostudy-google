@@ -18,21 +18,21 @@ type ParseResult struct {
 }
 
 type Item struct {
-	Tag  string
-	Name string
-	URL  string
-	Data interface{}
+	Tag  string `json:"tag"`
+	Name string `json:"name"`
+	URL  string `json:"url"`
+	Data interface{} `json:"data"`
 }
 
-type NikParser struct {
+type NilParser struct {
 }
 
-func (p NikParser) Parse(contents string) ParseResult {
+func (p NilParser) Parse(contents string) ParseResult {
 	return ParseResult{}
 }
 
-func (p NikParser) Serialize() (name string, args interface{}) {
-	return "NikParser", nil
+func (p NilParser) Serialize() (name string, args interface{}) {
+	return "NilParser", nil
 }
 
 type FuncParser struct {
