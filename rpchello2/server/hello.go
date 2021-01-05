@@ -17,7 +17,10 @@ func (s *HelloService) Hello(request string, reply *string) error {
 }
 
 func main() {
-	hello.RegisterHelloService(new(HelloService))
+	err := hello.RegisterHelloService(new(HelloService))
+	if err != nil {
+		log.Fatal("register service error: %v", err)
+	}
 	listener, err := net.Listen("tcp", ":9999")
 	if err != nil {
 		log.Fatal("listen tcp error: %v", err)
