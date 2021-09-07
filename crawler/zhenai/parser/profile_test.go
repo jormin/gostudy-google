@@ -7,7 +7,7 @@ import (
 )
 
 func TestParseProfile(t *testing.T) {
-	b, err := ioutil.ReadFile("profile.html")
+	b, err := ioutil.ReadFile("profile.txt")
 	if err != nil {
 		panic(err)
 	}

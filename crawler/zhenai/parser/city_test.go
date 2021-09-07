@@ -6,6 +6,6 @@ import (
 )
 
 func TestParseUserList(t *testing.T) {
-	b,_ := ioutil.ReadFile("city.html")
+	b,_ := ioutil.ReadFile("city.txt")
 	ParseUserList(string(b))
 }
