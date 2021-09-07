@@ -29,7 +29,7 @@ func TestRpcServer(t *testing.T) {
 		panic(err)
 	}
 
-	b, _ := ioutil.ReadFile("./city.html")
+	b, _ := ioutil.ReadFile("./city.txt")
 	result := parser.ParseUserList(string(b))
 	for _, item := range result.Items {
 		log.Info("%+v", item)
